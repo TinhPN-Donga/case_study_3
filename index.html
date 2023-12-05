@@ -48,7 +48,8 @@
       justify-content: center;
       align-items: center;
     }
-    #note{
+
+    #note {
       position: absolute;
       top: 0;
       left: 0;
@@ -57,25 +58,31 @@
       border-radius: 0 5px 5px 5px;
       padding: 10px;
     }
-    .circle{
+
+    .circle {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       margin-right: 5px;
     }
-    .red{
+
+    .red {
       background-color: red;
     }
-    .yellow{
+
+    .yellow {
       background-color: yellow;
     }
-    .blue{
+
+    .blue {
       background-color: blue;
     }
-    .aquamarine{
+
+    .aquamarine {
       background-color: aquamarine;
     }
-    .group{
+
+    .group {
       display: flex;
       margin-bottom: 10px;
     }
@@ -85,10 +92,18 @@
 <body>
   <div id="map"></div>
   <div id="note">
-    <div class="group"><div class="circle red"></div><span> : Mức 1 (>=100cm)</span></div>
-    <div class="group"><div class="circle yellow"></div><span> : Mức 2 (>=50cm)</span></div>
-    <div class="group"><div class="circle blue"></div><span> : Mức 3 (>=20cm)</span></div>
-    <div class="group"><div class="circle aquamarine"></div><span> : Mức 4 (<20cm)</span></div>
+    <div class="group">
+      <div class="circle red"></div><span> : Mức 1 (>=100cm)</span>
+    </div>
+    <div class="group">
+      <div class="circle yellow"></div><span> : Mức 2 (>=50cm)</span>
+    </div>
+    <div class="group">
+      <div class="circle blue"></div><span> : Mức 3 (>=20cm)</span>
+    </div>
+    <div class="group">
+      <div class="circle aquamarine"></div><span> : Mức 4 (<20cm) </span>
+    </div>
   </div>
   <script>
 
@@ -102,23 +117,6 @@
     });
 
     const API_URL = "http://localhost:3000/api/devices";
-    (async () => {
-      try {
-        const response = await fetch(API_URL, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-          },
-        })
-        if (response.status === 200) {
-          const data = await response.json();
-          console.log(data);
-          start(data.result);
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    })();
 
     function checkWaterLevel(value) {
       if (value >= 100) return 1;
@@ -139,8 +137,6 @@
           return "aquamarine";
       }
     }
-
-
 
     function start(res) {
       var geojson = {
@@ -181,8 +177,8 @@
               `;
         el.appendChild(markerMessage);
         newDiv.className = "marker";
-        newDiv.style.width = `${(marker.properties.value <= 20 ? 40: marker.properties.value)/100 * 45}px`;
-        newDiv.style.height = `${(marker.properties.value <= 20 ? 40: marker.properties.value)/100 * 45}px`;
+        newDiv.style.width = `${(marker.properties.value <= 30 ? 40 : marker.properties.value) / 100 * 65}px`;
+        newDiv.style.height = `${(marker.properties.value <= 30 ? 40 : marker.properties.value) / 100 * 65}px`;
         newDiv.style.backgroundColor = colorAlert(
           checkWaterLevel(marker.properties.value)
         );
@@ -209,6 +205,28 @@
           .addTo(map);
       });
     }
+
+    (async () => {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+        })
+        if (response.status === 200) {
+          const data = await response.json();
+          console.log(data);
+          start(data.result);
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    })();
+  
+    map.on('load',function (){
+      console.log('loaded');
+    });
   </script>
 </body>
 

@@ -48,11 +48,48 @@
       justify-content: center;
       align-items: center;
     }
+    #note{
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      box-shadow: 5px 5px 5px rgb(207, 207, 207);
+      border-radius: 0 5px 5px 5px;
+      padding: 10px;
+    }
+    .circle{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .red{
+      background-color: red;
+    }
+    .yellow{
+      background-color: yellow;
+    }
+    .blue{
+      background-color: blue;
+    }
+    .aquamarine{
+      background-color: aquamarine;
+    }
+    .group{
+      display: flex;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
 <body>
   <div id="map"></div>
+  <div id="note">
+    <div class="group"><div class="circle red"></div><span> : Mức 1 (>=100cm)</span></div>
+    <div class="group"><div class="circle yellow"></div><span> : Mức 2 (>=50cm)</span></div>
+    <div class="group"><div class="circle blue"></div><span> : Mức 3 (>=20cm)</span></div>
+    <div class="group"><div class="circle aquamarine"></div><span> : Mức 4 (<20cm)</span></div>
+  </div>
   <script>
 
     goongjs.accessToken = "wnicbAmnNkoMHNYUKWnlFHezV189FjmMwkNJ7hKW";

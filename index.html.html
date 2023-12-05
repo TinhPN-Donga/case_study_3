@@ -1,0 +1,294 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Example with Multiple Markers</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <link
+        href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+        rel="stylesheet"
+    />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGluaHBuIiwiYSI6ImNscGplZDBnMDAxZWgya3BsNzgyMnh2dm4ifQ.ELLVhUjV-fAL3AsZknkZsg'; // Replace with your Mapbox access token
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [108.22132, 16.03225],
+            zoom: 15
+        });
+
+        // Array of marker coordinates
+        var markers = [
+        { lng: 108.22132, lat:16.03225, isFlood: false},
+        { lng: 108.21821, lat:16.03671, isFlood: true},
+        { lng: 108.21870, lat:16.03250, isFlood: false},
+        ];
+
+        // Add markers to the map
+        markers.forEach(function(marker) {
+          var el = document.createElement('div');
+          el.className = 'custom-marker';
+          el.style.backgroundColor = marker.isFlood ? 'red':'blue';
+          el.style.width = '30px';
+          el.style.height = '18px';
+          el.style.borderRadius = '15px';
+            new mapboxgl.Marker(el)
+                .setLngLat([marker.lng, marker.lat])
+                .addTo(map);
+        });
+    </script>
+</body>
+</html>
+ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Add a default marker</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+  <style>
+    .marker {
+      display: block;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+      background-color: aquamarine;
+      /* width: 40px;
+      height: 40px; */
+      position: absolute;
+    }
+
+    /* .marker_area{
+            position: relative;
+        } */
+    .wrapper {
+      padding: 0.2rem 0.4rem;
+      border-radius: 10px;
+      background-color: white;
+      position: absolute;
+      left: -20px;
+      top: -82px;
+      box-shadow: 5px 5px 5px rgb(207, 207, 207);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+
+    goongjs.accessToken = "wnicbAmnNkoMHNYUKWnlFHezV189FjmMwkNJ7hKW";
+    // goongjs.accessToken = 'tgg0tvf91qcC1dA90s88IldGdXkB2sccqxCw5we5';
+    var map = new goongjs.Map({
+      container: "map",
+      style: "https://tiles.goong.io/assets/goong_map_web.json",
+      center: [108.22132, 16.03225],
+      zoom: 15,
+    });
+
+    const API_URL = "http://localhost:3000/api/devices";
+    (async () => {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+        })
+        if (response.status === 200) {
+          const data = await response.json();
+          console.log(data);
+          start(data.result);
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    })();
+
+    function checkWaterLevel(value) {
+      if (value >= 100) return 1;
+      if (value >= 50) return 2;
+      if (value >= 20) return 3;
+      return 4;
+    }
+
+    function colorAlert(val) {
+      switch (val) {
+        case 1:
+          return "red";
+        case 2:
+          return "yellow";
+        case 3:
+          return "blue";
+        default:
+          return "aquamarine";
+      }
+    }
+
+
+
+    function start(res) {
+      // var geojson = {
+      //   type: "FeatureCollection",
+      //   features: [
+      //     {
+      //       type: "Feature",
+      //       id: "Feature",
+      //       properties: {
+      //         message: "Sensor 1",
+      //         value: 100,
+      //       },
+      //       geometry: {
+      //         type: "Point",
+      //         coordinates: [108.22132, 16.03225],
+      //       },
+      //     },
+      //     {
+      //       type: "Feature",
+      //       id: "Feature",
+      //       properties: {
+      //         message: "Sensor 2",
+      //         value: 20,
+      //       },
+      //       geometry: {
+      //         type: "Point",
+      //         coordinates: [108.218, 16.0322],
+      //       },
+      //     },
+      //     {
+      //       type: "Feature",
+      //       id: "Feature",
+      //       properties: {
+      //         message: "Sensor 3",
+      //         value: 60,
+      //       },
+      //       geometry: {
+      //         type: "Point",
+      //         coordinates: [108.223, 16.03425],
+      //       },
+      //     },
+      //     {
+      //       type: "Feature",
+      //       id: "Feature",
+      //       properties: {
+      //         message: "Sensor 3",
+      //         value: 15,
+      //       },
+      //       geometry: {
+      //         type: "Point",
+      //         coordinates: [108.22610, 16.036],
+      //       },
+      //     },
+      //   ],
+      // };
+
+      var geojson = {
+        type: "FeatureCollection",
+        features: [
+
+        ],
+      };
+
+      for (var e of res) {
+        geojson.features.push(
+          {
+            type: "Feature",
+            id: "Feature",
+            properties: {
+              message: e.name,
+              value: e.value,
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [e.long, e.lat],
+            },
+          },
+        );
+      }
+
+      // add markers to map
+      geojson.features.forEach(function (marker) {
+        var el = document.createElement("div");
+        el.className = "marker_area";
+        const newDiv = document.createElement("div");
+        const markerMessage = document.createElement("div");
+        markerMessage.className = "wrapper";
+        markerMessage.innerHTML = `
+                  <span style="font-weight: bold;">${marker.properties.message}</span>
+                  <span>distance:${marker.properties.value}cm</span>
+                  <span>mức độ:${checkWaterLevel(marker.properties.value)}</span>
+              `;
+        el.appendChild(markerMessage);
+        newDiv.className = "marker";
+        newDiv.style.width = `${(marker.properties.value <= 20 ? 40: marker.properties.value)/100 * 45}px`;
+        newDiv.style.height = `${(marker.properties.value <= 20 ? 40: marker.properties.value)/100 * 45}px`;
+        newDiv.style.backgroundColor = colorAlert(
+          checkWaterLevel(marker.properties.value)
+        );
+        el.appendChild(newDiv);
+        el.addEventListener("click", function () {
+          console.log(markerMessage.style.display);
+
+          if (
+            !markerMessage.style.display ||
+            markerMessage.style.display == "none"
+          ) {
+            markerMessage.style.display = 'block';
+            map.flyTo({
+              center: marker.geometry.coordinates,
+            });
+          } else {
+            markerMessage.style.display = "none";
+          }
+        });
+
+        // add marker to map
+        new goongjs.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+      });
+    }
+  </script>
+</body>
+
+</html>

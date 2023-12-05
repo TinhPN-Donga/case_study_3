@@ -112,8 +112,8 @@
     var map = new goongjs.Map({
       container: "map",
       style: "https://tiles.goong.io/assets/goong_map_web.json",
-      center: [108.22132, 16.03225],
-      zoom: 15,
+      center: [108.22132, 16.00225],
+      zoom: 12,
     });
 
     const API_URL = "http://localhost:3000/api/devices";
@@ -134,7 +134,7 @@
         case 3:
           return "blue";
         default:
-          return "aquamarine";
+          return "#cccccc";
       }
     }
 
@@ -152,7 +152,7 @@
             type: "Feature",
             id: "Feature",
             properties: {
-              message: e.name,
+              message: e.address,
               value: e.value,
             },
             geometry: {

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Add a default marker</title>
+  <title>Hệ thống cảnh báo ngập</title>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
@@ -12,7 +12,6 @@
       margin: 0;
       padding: 0;
     }
-
     #map {
       position: absolute;
       top: 0;
@@ -32,10 +31,6 @@
       height: 40px; */
       position: absolute;
     }
-
-    /* .marker_area{
-            position: relative;
-        } */
     .wrapper {
       padding: 0.2rem 0.4rem;
       border-radius: 10px;
@@ -48,7 +43,6 @@
       justify-content: center;
       align-items: center;
     }
-
     #note {
       position: absolute;
       top: 0;
@@ -58,30 +52,24 @@
       border-radius: 0 5px 5px 5px;
       padding: 10px;
     }
-
     .circle {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       margin-right: 5px;
     }
-
     .red {
       background-color: red;
     }
-
     .yellow {
       background-color: yellow;
     }
-
     .blue {
       background-color: blue;
     }
-
     .aquamarine {
-      background-color: aquamarine;
+      background-color: #cccccc;
     }
-
     .group {
       display: flex;
       margin-bottom: 10px;
@@ -172,7 +160,7 @@
         markerMessage.className = "wrapper";
         markerMessage.innerHTML = `
                   <span style="font-weight: bold;">${marker.properties.message}</span>
-                  <span>distance:${marker.properties.value}cm</span>
+                  <span>height:${marker.properties.value}cm</span>
                   <span>mức độ:${checkWaterLevel(marker.properties.value)}</span>
               `;
         el.appendChild(markerMessage);
@@ -223,10 +211,6 @@
         console.error(error)
       }
     })();
-  
-    map.on('load',function (){
-      console.log('loaded');
-    });
   </script>
 </body>
 

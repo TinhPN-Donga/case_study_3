@@ -45,12 +45,16 @@
     }
     #note {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 5px;
+      left: 5px;
       background-color: white;
       box-shadow: 5px 5px 5px rgb(207, 207, 207);
-      border-radius: 0 5px 5px 5px;
+      border-radius: 5px;
       padding: 10px;
+      transition: all 1s ease-in-out; 
+    }
+    #note:hover{
+      cursor: pointer;
     }
     .circle {
       width: 20px;
@@ -73,6 +77,14 @@
     .group {
       display: flex;
       margin-bottom: 10px;
+      transition: all 1s ease-in-out; 
+    }
+    img#more{
+      display: none;
+      width: 20px;
+    }
+    img#more:hover{
+      cursor: pointer;
     }
   </style>
 </head>
@@ -92,6 +104,7 @@
     <div class="group">
       <div class="circle aquamarine"></div><span> : Mức 4 (<20cm) </span>
     </div>
+    <div><img id="more" src="./uploads/icon_more.png" alt="icon more"></div>
   </div>
   <script>
 
@@ -213,5 +226,29 @@
     })();
   </script>
 </body>
+<script>
+  let isShow = false;
+  let imageMore = document.querySelector('#more');
+  let noteElement = document.querySelector('#note');
+  let groupContainer = document.getElementsByClassName('group');
+  
+  function updateNoteContainer(){
+    imageMore.style.display  = isShow ? 'none' : 'block';
+    for(let e of groupContainer){
+        e.style.display = isShow ? 'flex' : 'none';
+    }
+  }
 
+  noteElement.addEventListener('click', ()=>{
+    isShow = !isShow;
+    updateNoteContainer();
+  });
+
+  function start(){
+    updateNoteContainer();
+  }
+
+  start();
+
+</script>
 </html>

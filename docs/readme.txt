@@ -1,0 +1,1 @@
+docs for project Smart Environment

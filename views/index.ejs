@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hệ thống cảnh báo ngập</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div id="note">
+        <div class="group">
+            <div class="circle red"></div><span> : Mức 1 (>=100cm)</span>
+        </div>
+        <div class="group">
+            <div class="circle yellow"></div><span> : Mức 2 (>=50cm)</span>
+        </div>
+        <div class="group">
+            <div class="circle blue"></div><span> : Mức 3 (>=20cm)</span>
+        </div>
+        <div class="group">
+            <div class="circle aquamarine"></div><span> : Mức 4 (<20cm) </span>
+        </div>
+        <div><img id="more" src="/uploads/icon_more.png" alt="icon more"></div>
+    </div>
+</body>
+<script src="/javascript/index.js"></script>
+<script src="/javascript/event_button.js"></script>
+</html>

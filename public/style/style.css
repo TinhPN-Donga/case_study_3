@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.marker {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    background-color: aquamarine;
+    /* width: 40px;
+height: 40px; */
+    position: absolute;
+}
+
+.wrapper {
+    padding: 0.2rem 0.4rem;
+    border-radius: 10px;
+    background-color: white;
+    position: absolute;
+    left: -20px;
+    top: -82px;
+    box-shadow: 5px 5px 5px rgb(207, 207, 207);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#note {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: white;
+    box-shadow: 5px 5px 5px rgb(207, 207, 207);
+    border-radius: 5px;
+    padding: 10px;
+    transition: all 1s ease-in-out;
+}
+
+#note:hover {
+    cursor: pointer;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.aquamarine {
+    background-color: #cccccc;
+}
+
+.group {
+    display: flex;
+    margin-bottom: 10px;
+    transition: all 1s ease-in-out;
+}
+
+img#more {
+    display: none;
+    width: 20px;
+}
+
+img#more:hover {
+    cursor: pointer;
+}

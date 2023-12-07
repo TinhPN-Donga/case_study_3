@@ -113,9 +113,14 @@
     var map = new goongjs.Map({
       container: "map",
       style: "https://tiles.goong.io/assets/goong_map_web.json",
-      center: [108.17132, 16.02225],
-      zoom: 12,
+      center: [108.20001, 16.02225],
+      zoom: 14,
     });
+
+    // add marker to map
+    new goongjs.Marker()
+          .setLngLat([108.20001, 16.02225])
+          .addTo(map);
 
     const API_URL = "http://localhost:3000/api/devices";
 

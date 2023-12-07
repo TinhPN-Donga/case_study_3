@@ -4,7 +4,7 @@ goongjs.accessToken = "wnicbAmnNkoMHNYUKWnlFHezV189FjmMwkNJ7hKW";
       container: "map",
       style: "https://tiles.goong.io/assets/goong_map_web.json",
       center: [108.20001, 16.02225],
-      zoom: 13,
+      zoom: 12,
     });
 
     var marker = new goongjs.Marker()

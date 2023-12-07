@@ -11,7 +11,7 @@ goongjs.accessToken = "wnicbAmnNkoMHNYUKWnlFHezV189FjmMwkNJ7hKW";
         .setLngLat([108.17132, 16.02225])
         .addTo(map);
 
-    const API_URL = "http://localhost:3000/api/devices";
+    const API_URL = "/api/devices";
 
     function checkWaterLevel(value) {
       if (value >= 100) return 1;

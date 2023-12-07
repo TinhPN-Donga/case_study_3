@@ -139,7 +139,7 @@
       }
     }
 
-    function start(res) {
+    function buildMarker(res) {
       var geojson = {
         type: "FeatureCollection",
         features: [
@@ -218,7 +218,7 @@
         if (response.status === 200) {
           const data = await response.json();
           console.log(data);
-          start(data.result);
+          buildMarker(data.result);
         }
       } catch (error) {
         console.error(error)

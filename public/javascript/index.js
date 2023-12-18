@@ -9,10 +9,6 @@ var map = new goongjs.Map({
   zoom: 12,
 });
 
-var marker = new goongjs.Marker()
-  .setLngLat([108.17132, 16.02225])
-  .addTo(map);
-
 const API_URL = "/api/devices";
 
 function checkWaterLevel(value) {

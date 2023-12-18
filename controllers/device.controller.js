@@ -1,4 +1,5 @@
 const {DeviceService}  = require('../services/index');
+const io = require("../module_sokect");
 
 const defaultResult = {
     message: 'success',
@@ -49,6 +50,7 @@ const putUpdateDevice = async (req, res)=>{
         const body = req.body
         const data = await DeviceService.putUpdateDevice(id, body);
         const result = {...defaultResult, result: data};
+        io.emit('data', {result});
         return res.status(200).json(result);
     } catch (error) {
         const result = {...defaultResult, error: error.message, status: false, message: 'failed'};

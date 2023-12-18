@@ -1,22 +1,22 @@
 let isShow = false;
-    let imageMore = document.querySelector('#more');
-    let noteElement = document.querySelector('#note');
-    let groupContainer = document.getElementsByClassName('group');
-    
-    function updateNoteContainer(){
-        imageMore.style.display  = isShow ? 'none' : 'block';
-        for(let e of groupContainer){
-            e.style.display = isShow ? 'flex' : 'none';
-        }
-    }
+let imageMore = document.querySelector("#more");
+let noteElement = document.querySelector("#note");
+let groupContainer = document.getElementsByClassName("group");
 
-    noteElement.addEventListener('click', ()=>{
-        isShow = !isShow;
-        updateNoteContainer();
-    });
+function updateNoteContainer() {
+  imageMore.style.display = isShow ? "none" : "block";
+  for (let e of groupContainer) {
+    e.style.display = isShow ? "flex" : "none";
+  }
+}
 
-    function start(){
-        updateNoteContainer();
-    }
+noteElement.addEventListener("click", () => {
+  isShow = !isShow;
+  updateNoteContainer();
+});
 
-    start();
+function start() {
+  updateNoteContainer();
+}
+
+start();

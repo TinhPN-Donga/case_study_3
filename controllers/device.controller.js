@@ -49,8 +49,9 @@ const putUpdateDevice = async (req, res)=>{
         const {id} = req.params;
         const body = req.body
         const data = await DeviceService.putUpdateDevice(id, body);
+        const dataDevices = await DeviceService.getDeviceDetail(id);
         const result = {...defaultResult, result: data};
-        io.emit('data', {result});
+        io.emit('data', dataDevices);
         return res.status(200).json(result);
     } catch (error) {
         const result = {...defaultResult, error: error.message, status: false, message: 'failed'};

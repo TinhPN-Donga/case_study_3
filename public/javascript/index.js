@@ -30,48 +30,25 @@ function colorAlert(val) {
       return "#cccccc";
   }
 }
-
-function buildMarker(res) {
-  var geojson = {
-    type: "FeatureCollection",
-    features: [
-
-    ],
-  };
-
-  for (var e of res) {
-    geojson.features.push(
-      {
-        type: "Feature",
-        id: "Feature",
-        properties: {
-          message: e.address,
-          value: e.value,
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [e.long, e.lat],
-        },
-      },
-    );
-  }
-
-  // add markers to map
-  geojson.features.forEach(function (marker) {
-    var el = document.createElement("div");
+function buildNewMarker(marker) {
+  var el = document.createElement("div");
     el.className = "marker_area";
     const newDiv = document.createElement("div");
     const markerMessage = document.createElement("div");
     markerMessage.className = "wrapper";
     markerMessage.innerHTML = `
-                  <span style="font-weight: bold;">${marker.properties.message}</span>
+                  <span style="font-weight: bold;">${
+                    marker.properties.message
+                  }</span>
                   <span>height:${marker.properties.value}cm</span>
-                  <span>mức độ:${checkWaterLevel(marker.properties.value)}</span>
+                  <span>mức độ:${checkWaterLevel(
+                    marker.properties.value
+                  )}</span>
               `;
     el.appendChild(markerMessage);
     newDiv.className = "marker";
-    newDiv.style.width = `${(marker.properties.value <= 30 ? 40 : marker.properties.value) / 100 * 65}px`;
-    newDiv.style.height = `${(marker.properties.value <= 30 ? 40 : marker.properties.value) / 100 * 65}px`;
+    newDiv.style.width = `${((marker.properties.value <= 30 ? 40 : marker.properties.value) / 100) * 65}px`;
+    newDiv.style.height = `${((marker.properties.value <= 30 ? 40 : marker.properties.value) / 100) *65}px`;
     newDiv.style.backgroundColor = colorAlert(
       checkWaterLevel(marker.properties.value)
     );
@@ -83,7 +60,7 @@ function buildMarker(res) {
         !markerMessage.style.display ||
         markerMessage.style.display == "none"
       ) {
-        markerMessage.style.display = 'block';
+        markerMessage.style.display = "block";
         map.flyTo({
           center: marker.geometry.coordinates,
         });
@@ -91,55 +68,97 @@ function buildMarker(res) {
         markerMessage.style.display = "none";
       }
     });
-
-    // // add marker to map
-    // new goongjs.Marker(el)
-    //   .setLngLat(marker.geometry.coordinates)
-    //   .addTo(map);
-
-
     // add marker to map
-    var marker = new goongjs.Marker(el)
+    var newMarker = new goongjs.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .addTo(map);
 
-    listMarkers.push(marker);
+    listMarkers.push({ id: marker.properties.id, marker: newMarker });
+}
+
+function buildMarker(res) {
+  var geojson = {
+    type: "FeatureCollection",
+    features: [],
+  };
+
+  for (var e of res) {
+    geojson.features.push({
+      type: "Feature",
+      id: "Feature",
+      properties: {
+        message: e.address,
+        value: e.value,
+        id: e._id,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [e.long, e.lat],
+      },
+    });
+  }
+
+  // add markers to map
+  geojson.features.forEach(function (element) {
+    buildNewMarker(element);
   });
 }
 
 const callApi = async () => {
   try {
     const response = await fetch(API_URL, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
       },
     });
-    console.log('hihihihihihihihih');
+    console.log("hihihihihihihihih");
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data.result);
       buildMarker(data.result);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 const initStart = () => {
   callApi();
-}
+};
 initStart();
 
+
+
+
+
+
 const socket = io();
-socket.on('connect', () => {
-  console.log('Connected to server');
+socket.on("connect", () => {
+  console.log("Connected to server");
 });
-socket.on('data', (value) => {
-  for(let e of listMarkers) {
-    e.remove();
+socket.on("data", (value) => {
+  for (let e of listMarkers) {
+    if (value._id == e.id) {
+      const index = listMarkers.indexOf(e);
+      e.marker.remove();
+      listMarkers.splice(index, 1);
+      let newData = {
+        type: "Feature",
+        id: "Feature",
+        properties: {
+          message: value.address,
+          value: value.value,
+          id: value._id,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [value.long, value.lat],
+        },
+      }
+      buildNewMarker(newData);
+      break;
+    }
   }
-  callApi();
 });
-socket.on('disconnect', () => {
-  console.log('Disconnected from server');
+socket.on("disconnect", () => {
+  console.log("Disconnected from server");
 });
